@@ -1,43 +1,43 @@
-import Mastermind from "./mastermind";
+import Codemaker from "./Codemaker";
 import { CodeColours, HintColours, Messages } from "../Constants/Constants";
 
 describe("The Mastermind", function() {
   describe("Initializes", function() {
     test("should set a secret code", function() {
       var code = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
 
       expect(mastermind.secretCode).toEqual(code);
     });
 
     test("should randomly generate a code if one is not specified", function() {
-      var mastermind = new Mastermind();
+      var mastermind = new Codemaker();
       expect(mastermind.secretCode.length).toEqual(4);
     });
 
     test("should only choose valid colours", function() {
       var code = ["pink", CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE];
       expect(() => {
-        new Mastermind(code)
+        new Codemaker(code)
       }).toThrow(Messages.INVALID_COLOUR);
     });
 
     test("should pass in exactly 4 colours", function() {
       var code = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE, CodeColours.GREEN];
       expect(() => {
-        new Mastermind(code)
+        new Codemaker(code)
       }).toThrow(Messages.LENGTH_MUST_BE_4);
 
       var code = [CodeColours.RED, CodeColours.BLUE, CodeColours.GREEN];
       expect(() => {
-        new Mastermind(code)
+        new Codemaker(code)
       }).toThrow(Messages.LENGTH_MUST_BE_4);
     });
   });
 
   describe("Guesses", function() {
     test("should only allow 4 elements", function() {
-      var mastermind = new Mastermind()
+      var mastermind = new Codemaker()
       
       var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE];
       expect(() => {mastermind.guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
@@ -49,7 +49,7 @@ describe("The Mastermind", function() {
     test("should return a white marker for each correct colour in the guess", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.PURPLE, CodeColours.RED, CodeColours.ORANGE, CodeColours.YELLOW];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
       
       expect(mastermind.guess(guess)).toEqual([HintColours.WHITE, HintColours.WHITE]);
     });
@@ -57,7 +57,7 @@ describe("The Mastermind", function() {
     test("should return a black marker for each correct colour in the correct position in the guess", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
       
       expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
@@ -65,7 +65,7 @@ describe("The Mastermind", function() {
     test("should not return a marker for colours in the guess that are not in the secret", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
       
       expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
@@ -76,7 +76,7 @@ describe("The Mastermind", function() {
       var expectedWhiteMarkers = 2;
       var expectedBlackMarkers = 2;
 
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
       var hint = mastermind.guess(guess) as string[];
       var actualWhiteMarkers = 0;
       var actualBlackMarkers = 0;
@@ -93,7 +93,7 @@ describe("The Mastermind", function() {
     test("should return a win message for a correct guess", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
 
       expect(mastermind.guess(guess)).toEqual(Messages.WON);
     });
@@ -101,7 +101,7 @@ describe("The Mastermind", function() {
     test("should return a lose message after 10 incorrect guesses", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
 
       // Make 9 guesses
       for(var i = 0; i < 9; i++) mastermind.guess(guess)
@@ -114,7 +114,7 @@ describe("The Mastermind", function() {
       var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
       var correctGuess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var mastermind = new Mastermind(code);
+      var mastermind = new Codemaker(code);
 
       // Make 9 guesses
       for(var i = 0; i < 9; i++) mastermind.guess(guess)

@@ -1,11 +1,11 @@
 import { CodeColours, HintColours, Messages } from '../constants/constants'
 
-export default class Mastermind {
+export default class Codemaker {
 
   secretCode: string[] = null;
   private numberOfGuesses = 0;
 
-  constructor(code:string[] = null ) {
+  constructor(code:string[] = null) {
     this.secretCode = this.GenerateCode(code);
     this.Validate(this.secretCode);
   }
