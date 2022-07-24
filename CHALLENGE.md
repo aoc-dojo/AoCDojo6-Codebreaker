@@ -1,5 +1,5 @@
-# Mastermind
-The game where one player, the mastermind, has to choose a secret combination of coloured pegs. Then the second player, the codebreaker, tries to guess the code. The mastermind provides feedback to each guess of the codebreaker, indicating the number of well-placed and misplaced colours.
+# Codebreaker
+This is the player side of a game of mastermind, where the objective is to correctly guess the code set by the mastermind. In this game one player, the mastermind, will create a secret combination of coloured pegs. Then the second player, the codebreaker, tries to guess the code. The mastermind provides feedback to each guess of the codebreaker, indicating the number of well-placed and misplaced colours.
 
 ## Rules
 1. The CodeBreaker needs to try and identify the secret code set up by the mastermind. The colours of the code are selected from `["red", "blue", "green", "orange", "purple", "yellow"]`. Duplicated colours are allowed, but the code must be exactly 4 colours in length.
@@ -11,12 +11,8 @@ The game where one player, the mastermind, has to choose a secret combination of
 7. The returned array elements from the Mastermind will not be in any particular order. The returned array will be shuffled.
 
 ## Tasks
-Your task is to create a game of mastermind that follows the rules described in the previous section. The mastermind has already been set up so that the game will be initialized with one code to be broken, and there is a method to check the guesses with.
-Pay attention to edge cases and exceptions.
-After the game is done, implement a code to generate the initial `secret code` automatically and integrate it with the game.
-Given that you have a working game of mastermind, design and implement the code to play and beat the game.
- - You can start by allowing more than 10 tries at first.
- - When you have a working algorithm, try to optimize it so the game is beat in as few guesses as possible.
+Your task is to create a code that's able to play the codebreaker role of the game and correctly guess the secret code in as few tries as possible.
+There
 
 ## Examples
 Given the code `["blue", "red", "green", "purple"]` <br/>
