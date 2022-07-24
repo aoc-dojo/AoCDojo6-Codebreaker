@@ -1,21 +1,22 @@
-import { CodeColours, HintColours, Messages } from '../constants/constants'
+import { CodeColours, HintColours, Messages } from '../Constants/Constants'
 
 export default class Codemaker {
-
-  secretCode: string[] = null;
+  secretCode: string[] = [];
   private numberOfGuesses = 0;
 
-  constructor(code:string[] = null) {
-    this.secretCode = this.GenerateCode(code);
-    this.Validate(this.secretCode);
+  constructor(code:string[] = []) {
+    this.validate(code);
+    this.secretCode = code;
   }
 
-  public guess(guess: string[]):string | string[] {
-    this.Validate(guess);
-    var hint = [];
-    var numberOfCorrectKeys = 0;
+  public Guess(guess: string[]):string | string[] {
     this.numberOfGuesses += 1;
+    if(this.numberOfGuesses > 10) return Messages.TOO_MANY_TRIES;
 
+    this.validate(guess);
+
+    var hint: string[] = [];
+    var numberOfCorrectKeys = 0;
     // Add a marker to hint for each guess key.
     guess.forEach((key, index) => {
       var keyExistsInSecret = this.secretCode.indexOf(key) != -1;
@@ -29,26 +30,11 @@ export default class Codemaker {
     })
 
     if(numberOfCorrectKeys === 4) return Messages.WON;
-    if(this.numberOfGuesses >= 10) return Messages.TOO_MANY_TRIES;
 
     return this.shuffle(hint);
   }
 
-  private GenerateCode(code: string[] = null): string[] {
-    if(code) return code;
-
-    var colourKeys = Object.keys(CodeColours).map(key => key.toLocaleLowerCase());
-    var numberOfColours = colourKeys.length - 1;
-
-    return [
-      colourKeys[this.getRandomInt(numberOfColours)],
-      colourKeys[this.getRandomInt(numberOfColours)],
-      colourKeys[this.getRandomInt(numberOfColours)],
-      colourKeys[this.getRandomInt(numberOfColours)]
-    ]
-  }
-
-  private Validate(code: string[]) {
+  private validate(code: string[]) {
 
     // Make sure the code contains exactly 4 keys
     if(code.length !== 4) throw new Error(Messages.LENGTH_MUST_BE_4);
@@ -58,10 +44,6 @@ export default class Codemaker {
     code.forEach(key => {
       if(colourKeys.indexOf(key.toLocaleLowerCase()) === -1) throw new Error(Messages.INVALID_COLOUR);
     })
-  }
-
-  private getRandomInt(max) {
-    return Math.floor(Math.random() * max);
   }
 
   private shuffle(array) {
@@ -81,5 +63,4 @@ export default class Codemaker {
   
     return array;
   }
-
 }

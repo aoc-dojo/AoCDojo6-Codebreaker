@@ -10,11 +10,6 @@ describe("The Mastermind", function() {
       expect(mastermind.secretCode).toEqual(code);
     });
 
-    test("should randomly generate a code if one is not specified", function() {
-      var mastermind = new Codemaker();
-      expect(mastermind.secretCode.length).toEqual(4);
-    });
-
     test("should only choose valid colours", function() {
       var code = ["pink", CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE];
       expect(() => {
@@ -37,49 +32,50 @@ describe("The Mastermind", function() {
 
   describe("Guesses", function() {
     test("should only allow 4 elements", function() {
-      var mastermind = new Codemaker()
+      const code = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE]
+      const mastermind = new Codemaker(code)
       
-      var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE];
-      expect(() => {mastermind.guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
+      let guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE];
+      expect(() => {mastermind.Guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
   
       guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE];
-      expect(() => {mastermind.guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
+      expect(() => {mastermind.Guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
     });
   
     test("should return a white marker for each correct colour in the guess", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.PURPLE, CodeColours.RED, CodeColours.ORANGE, CodeColours.YELLOW];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.PURPLE, CodeColours.RED, CodeColours.ORANGE, CodeColours.YELLOW];
+      const mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.WHITE, HintColours.WHITE]);
+      expect(mastermind.Guess(guess)).toEqual([HintColours.WHITE, HintColours.WHITE]);
     });
 
     test("should return a black marker for each correct colour in the correct position in the guess", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
+      const mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
+      expect(mastermind.Guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
 
     test("should not return a marker for colours in the guess that are not in the secret", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
+      const mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
+      expect(mastermind.Guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
 
     test("should return a valid hint for the guess", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
-      var expectedWhiteMarkers = 2;
-      var expectedBlackMarkers = 2;
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
+      const expectedWhiteMarkers = 2;
+      const expectedBlackMarkers = 2;
 
-      var mastermind = new Codemaker(code);
-      var hint = mastermind.guess(guess) as string[];
-      var actualWhiteMarkers = 0;
-      var actualBlackMarkers = 0;
+      const mastermind = new Codemaker(code);
+      const hint = mastermind.Guess(guess) as string[];
+      let actualWhiteMarkers = 0;
+      let actualBlackMarkers = 0;
 
       hint.forEach(key => {
         key === HintColours.BLACK ? actualBlackMarkers++ : actualWhiteMarkers++;
@@ -91,36 +87,49 @@ describe("The Mastermind", function() {
     });
 
     test("should return a win message for a correct guess", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const mastermind = new Codemaker(code);
 
-      expect(mastermind.guess(guess)).toEqual(Messages.WON);
+      expect(mastermind.Guess(guess)).toEqual(Messages.WON);
     });
 
     test("should return a lose message after 10 incorrect guesses", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
+      const mastermind = new Codemaker(code);
 
       // Make 9 guesses
-      for(var i = 0; i < 9; i++) mastermind.guess(guess)
+      for(let i = 0; i < 10; i++) mastermind.Guess(guess)
      
       // Make the 10th guess which is also incorrect.
-      expect(mastermind.guess(guess)).toEqual("Error: you have had more than 10 tries!");
+      expect(mastermind.Guess(guess)).toEqual("Error: you have had more than 10 tries!");
+    });
+
+    test("should return the lose message after every guess after the 10th one", function() {
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
+      const mastermind = new Codemaker(code);
+
+      // Make 10 guesses
+      for(let i = 0; i < 10; i++) mastermind.Guess(guess)
+     
+      // Make the 10th guess which is also incorrect.
+      expect(mastermind.Guess(guess)).toEqual("Error: you have had more than 10 tries!");
+      expect(mastermind.Guess(code)).toEqual("Error: you have had more than 10 tries!");
     });
 
     test("should return a win message if the 10th guess is correct", function() {
-      var code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
-      var correctGuess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
-      var mastermind = new Codemaker(code);
+      const code = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.ORANGE, CodeColours.GREEN];
+      const correctGuess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
+      const mastermind = new Codemaker(code);
 
       // Make 9 guesses
-      for(var i = 0; i < 9; i++) mastermind.guess(guess)
+      for(let i = 0; i < 9; i++) mastermind.Guess(guess)
      
       // Make the 10th guess which is correct.
-      expect(mastermind.guess(correctGuess)).toEqual(Messages.WON);
+      expect(mastermind.Guess(correctGuess)).toEqual(Messages.WON);
     });
   });
 });
