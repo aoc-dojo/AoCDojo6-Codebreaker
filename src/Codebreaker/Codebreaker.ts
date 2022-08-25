@@ -1,7 +1,7 @@
 import Codemaker from "../Codemaker/Codemaker"
 
 export default class Codebreaker {
-  
+
   private codemaker: Codemaker;
 
   constructor() {
@@ -15,5 +15,5 @@ export default class Codebreaker {
   public makeGuess(guess: string[]) {
     this.codemaker.takeGuess(guess);
   }
-  
+
 }

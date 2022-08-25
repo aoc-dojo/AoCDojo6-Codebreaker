@@ -2,21 +2,21 @@ import Codebreaker from "./Codebreaker";
 import Codemaker from "../Codemaker/Codemaker";
 jest.mock("../Codemaker/Codemaker")
 
-describe("The Codebreaker", function() {
-  describe("Initializes", function() {
-    test("should return a Codebreaker object", function() {
+describe("The Codebreaker", function () {
+  describe("Initializes", function () {
+    test("should return a Codebreaker object", function () {
       var codebreaker = new Codebreaker();
       expect(codebreaker).not.toBeNull();
     });
   })
-  describe("Guesses", function() {
-    test("should call Codemaker", function() {
+  describe("Guesses", function () {
+    test("should call Codemaker", function () {
       var codebreaker = new Codebreaker();
       var guess = [];
       codebreaker.makeGuess(guess);
       expect(Codemaker).toHaveBeenCalled();
     });
-    
+
     /*
 
     Fill in more test cases here.
@@ -30,6 +30,6 @@ describe("The Codebreaker", function() {
     // test("should make at most 10 guesses", function() {
     // });
 
-    
+
   });
 })
