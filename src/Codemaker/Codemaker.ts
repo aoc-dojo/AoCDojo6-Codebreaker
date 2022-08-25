@@ -10,7 +10,7 @@ export default class Codemaker {
     this.Validate(this.secretCode);
   }
 
-  public guess(guess: string[]):string | string[] {
+  public takeGuess(guess: string[]):string | string[] {
     this.Validate(guess);
     var hint = [];
     var numberOfCorrectKeys = 0;

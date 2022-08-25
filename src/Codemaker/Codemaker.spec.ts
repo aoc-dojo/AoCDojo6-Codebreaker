@@ -35,15 +35,15 @@ describe("The Mastermind", function() {
     });
   });
 
-  describe("Guesses", function() {
+  describe("Takes guesses", function() {
     test("should only allow 4 elements", function() {
       var mastermind = new Codemaker()
       
       var guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE];
-      expect(() => {mastermind.guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
+      expect(() => {mastermind.takeGuess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
   
       guess = [CodeColours.RED, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE];
-      expect(() => {mastermind.guess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
+      expect(() => {mastermind.takeGuess(guess)}).toThrow(Messages.LENGTH_MUST_BE_4);
     });
   
     test("should return a white marker for each correct colour in the guess", function() {
@@ -51,7 +51,7 @@ describe("The Mastermind", function() {
       var guess = [CodeColours.PURPLE, CodeColours.RED, CodeColours.ORANGE, CodeColours.YELLOW];
       var mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.WHITE, HintColours.WHITE]);
+      expect(mastermind.takeGuess(guess)).toEqual([HintColours.WHITE, HintColours.WHITE]);
     });
 
     test("should return a black marker for each correct colour in the correct position in the guess", function() {
@@ -59,7 +59,7 @@ describe("The Mastermind", function() {
       var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
       var mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
+      expect(mastermind.takeGuess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
 
     test("should not return a marker for colours in the guess that are not in the secret", function() {
@@ -67,7 +67,7 @@ describe("The Mastermind", function() {
       var guess = [CodeColours.RED, CodeColours.YELLOW, CodeColours.BLUE, CodeColours.PURPLE];
       var mastermind = new Codemaker(code);
       
-      expect(mastermind.guess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
+      expect(mastermind.takeGuess(guess)).toEqual([HintColours.BLACK, HintColours.BLACK]);
     });
 
     test("should return a valid hint for the guess", function() {
@@ -77,7 +77,7 @@ describe("The Mastermind", function() {
       var expectedBlackMarkers = 2;
 
       var mastermind = new Codemaker(code);
-      var hint = mastermind.guess(guess) as string[];
+      var hint = mastermind.takeGuess(guess) as string[];
       var actualWhiteMarkers = 0;
       var actualBlackMarkers = 0;
 
@@ -95,7 +95,7 @@ describe("The Mastermind", function() {
       var guess = [CodeColours.RED, CodeColours.ORANGE, CodeColours.BLUE, CodeColours.GREEN];
       var mastermind = new Codemaker(code);
 
-      expect(mastermind.guess(guess)).toEqual(Messages.WON);
+      expect(mastermind.takeGuess(guess)).toEqual(Messages.WON);
     });
 
     test("should return a lose message after 10 incorrect guesses", function() {
@@ -104,10 +104,10 @@ describe("The Mastermind", function() {
       var mastermind = new Codemaker(code);
 
       // Make 9 guesses
-      for(var i = 0; i < 9; i++) mastermind.guess(guess)
+      for(var i = 0; i < 9; i++) mastermind.takeGuess(guess)
      
       // Make the 10th guess which is also incorrect.
-      expect(mastermind.guess(guess)).toEqual("Error: you have had more than 10 tries!");
+      expect(mastermind.takeGuess(guess)).toEqual("Error: you have had more than 10 tries!");
     });
 
     test("should return a win message if the 10th guess is correct", function() {
@@ -117,10 +117,10 @@ describe("The Mastermind", function() {
       var mastermind = new Codemaker(code);
 
       // Make 9 guesses
-      for(var i = 0; i < 9; i++) mastermind.guess(guess)
+      for(var i = 0; i < 9; i++) mastermind.takeGuess(guess)
      
       // Make the 10th guess which is correct.
-      expect(mastermind.guess(correctGuess)).toEqual(Messages.WON);
+      expect(mastermind.takeGuess(correctGuess)).toEqual(Messages.WON);
     });
   });
 });
