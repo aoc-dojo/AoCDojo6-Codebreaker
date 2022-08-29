@@ -1,20 +1,18 @@
 import Codebreaker from "./Codebreaker";
 import Codemaker from "../Codemaker/Codemaker";
-jest.mock("../Codemaker/Codemaker")
+import { CodeColours } from "../constants/constants";
 
 describe("The Codebreaker", function () {
-  describe("Initializes", function () {
-    test("should return a Codebreaker object", function () {
-      var codebreaker = new Codebreaker();
-      expect(codebreaker).not.toBeNull();
-    });
-  })
   describe("Guesses", function () {
-    test("should call Codemaker", function () {
-      var codebreaker = new Codebreaker();
-      var guess = [];
-      codebreaker.makeGuess(guess);
-      expect(Codemaker).toHaveBeenCalled();
+
+    test("")
+    
+    test("should call Codemaker with entirely incorrect guess and receive empty array", function () {
+      var codemaker = new Codemaker([CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE, CodeColours.BLUE]);
+      var codebreaker = new Codebreaker(codemaker);
+      var guess = [CodeColours.GREEN, CodeColours.GREEN, CodeColours.GREEN, CodeColours.GREEN];
+      var response = codebreaker.makeGuesses();
+      expect(response).toStrictEqual([]);
     });
 
     /*

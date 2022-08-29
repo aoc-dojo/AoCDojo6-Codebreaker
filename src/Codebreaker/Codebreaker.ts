@@ -1,19 +1,21 @@
 import Codemaker from "../Codemaker/Codemaker"
+import { Outcome } from "../constants/constants";
 
 export default class Codebreaker {
 
   private codemaker: Codemaker;
 
-  constructor() {
-    this.codemaker = new Codemaker();
+  constructor(codemaker: Codemaker) {
+    this.codemaker = codemaker;
   }
 
-  public makeGuesses() {
+  public makeGuesses(): Outcome {
     // TODO: add implementation
+    return Outcome.LOST
   }
 
-  public makeGuess(guess: string[]) {
-    this.codemaker.takeGuess(guess);
+  private makeGuess(guess: string[]): string | string[] {
+    return this.codemaker.takeGuess(guess);
   }
 
 }
